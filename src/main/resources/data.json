@@ -1,0 +1,83 @@
+{
+	"places": [
+		{
+			"name": "Cafe de la paix",
+			"latitude": "47.5098832",
+			"longitude": "6.7952318"
+		},
+		{
+			"name": "McDo",
+			"latitude": "47.5030608",
+			"longitude": "6.8110967"
+		},
+		{
+			"name": "UFC",
+			"latitude": "47.4950289",
+			"longitude": "6.8009195"
+		},
+		{
+			"name": "Cinema colisee",
+			"latitude": "47.5100302",
+			"longitude": "6.8009195"
+		},
+		{
+			"name": "Parc pres la rose",
+			"latitude": "47.5057873",
+			"longitude": "6.8009352"
+		},
+		{
+			"name": "resto universitaire",
+			"latitude": "47.4965163",
+			"longitude": "6.8046885"
+		},
+		{
+			"name": "Leclerc",
+			"latitude": "47.533296",
+			"longitude": "6.7356108"
+		},
+		{
+			"name": "Obrian pub",
+			"latitude": "47.5102158",
+			"longitude": "6.7988818"
+		},
+		{
+			"name": "Quick",
+			"latitude": "47.5119954",
+			"longitude": "6.7894699"
+		}
+	],
+
+
+	"persons": [
+		{
+			"name": "Mohamad",
+			"latitude": "47.4964199",
+			"longitude": "6.8035671"
+		},
+		{
+			"name": "Jad",
+			"latitude": "47.5094736",
+			"longitude": "6.7850558"
+		},
+		{
+			"name": "Ali",
+			"latitude": "47.5162647",
+			"longitude": "6.7951629"
+		},
+		{
+			"name": "Joe",
+			"latitude": "47.5142547",
+			"longitude": "6.7979177"
+		},
+		{
+			"name": "Philip",
+			"latitude": "47.4970777",
+			"longitude": "6.780855"
+		},
+		{
+			"name": "Elie",
+			"latitude": "47.5195022",
+			"longitude": "6.7820572"
+		}
+	]
+}

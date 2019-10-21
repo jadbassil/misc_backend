@@ -1,13 +1,19 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Location {
+public class Location implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double longitude;
 	private double latitude;
 	private static ArrayList<Place> places = new ArrayList<Place>();
 	private static ArrayList<Person> persons = new ArrayList<Person>();
+	public boolean isPerson;
 	
 	public Location(double longitude, double latitude) {
 		this.longitude = longitude;
@@ -45,9 +51,5 @@ public class Location {
 	public static ArrayList<Person> getPersons() {
 		return persons;
 	}
-	
-	
-	
-	
 	
 }

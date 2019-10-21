@@ -1,11 +1,18 @@
 package models;
 
-public class Place extends Location{
+import java.io.Serializable;
+
+public class Place extends Location implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String name;
 	
 	public Place(String name, double longitude, double latitude) {
 		super(longitude, latitude);
+		super.isPerson = false;
 		this.name = name;
 		Location.addPlace(this);
 	}
