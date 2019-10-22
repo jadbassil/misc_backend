@@ -1,55 +1,19 @@
 package models;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import utils.Utils;
+
 public class Test {
 	
-	static String filepath = "C:\\Users\\User\\Documents\\M2_IOT\\MISC\\misc_backend\\misc_server\\src\\main\\resources\\obj";
 	
-    public static void WriteObjectToFile(Object serObj) {
-    	 
-        try {
- 
-            FileOutputStream fileOut = new FileOutputStream(filepath);
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(serObj);
-            objectOut.close();
-            System.out.println("The Object  was succesfully written to a file");
- 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public static Object ReadObjectFromFile(String filepath) {
-    	 
-        try {
- 
-            FileInputStream fileIn = new FileInputStream(filepath);
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
- 
-            Object obj = objectIn.readObject();
- 
-            System.out.println("The Object has been read from the file");
-            objectIn.close();
-            return obj;
- 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
 
 	public static void main(String[] args) throws ParseException {
 		JSONParser jsonParser = new JSONParser();
@@ -77,7 +41,7 @@ public class Test {
             
 //            MOD mod = new MOD();
 //            Test.WriteObjectToFile(mod);
-            MOD mod = (MOD) Test.ReadObjectFromFile(filepath); 
+            MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath); 
             for (int i = 0; i < mod.locations.size(); i++) {
 				ArrayList<Property> p = mod.matrix.get(i);
 				for (Property property : p) {
@@ -95,10 +59,11 @@ public class Test {
 				for (Property property : p) {
 					System.out.print(property.getDistance() + " ");
 				}
-				System.out.println();
-				
+				System.out.println();				
 			}
             System.out.println(mod.matrix.get(0).get(6).getInstructions());
+            Place place = mod.nearestLocation();
+            System.out.println("nearest location: "+place.getName());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

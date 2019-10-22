@@ -14,15 +14,15 @@ public class MOD implements Serializable{
 	
 	public ArrayList<Integer> changed = new ArrayList<Integer>(); 
 	
-	public MOD() {
+	public  MOD() {
 		locations.addAll(Location.getPersons());
 		locations.addAll(Location.getPlaces());
 		this.buildMatrix();
 		System.out.println("transitive closure started...");
-//		boolean e = this.transitiveClosure();
-//		while(e) {
-//			this.transitiveClosure();
-//		}
+		boolean e = this.transitiveClosure();
+		while(e) {
+			e = this.transitiveClosure();
+		}
 	}
 	
 	private void buildMatrix() {
@@ -79,6 +79,30 @@ public class MOD implements Serializable{
 		return e;
 	}
 	
+	public Place nearestLocation() {
+		int min = 9999999;
+		Location location = null;
+		int d;
+		for(int i=Location.getPersons().size();i<locations.size();i++) { // all places
+			d = 0;
+			Place p = (Place) locations.get(i);
+			System.out.print(p.getName() + ": ");
+			for(int j=0;j<Location.getPersons().size();j++) {
+				d += matrix.get(j).get(i).getDistance();
+			}
+			if (d<min) {
+				min = d;
+				location = locations.get(i);
+			}
+			System.out.println(d);
+			
+		}
+		return (Place) location;
+	}
+
+	public ArrayList<Location> getLocations() {
+		return locations;
+	}
 	
 
 }

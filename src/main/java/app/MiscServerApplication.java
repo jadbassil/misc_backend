@@ -1,4 +1,4 @@
-package com.example.demo;
+package app;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,11 +11,11 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-
 import models.Location;
 import models.MOD;
 import models.Person;
 import models.Place;
+import utils.Utils;
 
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
 public class MiscServerApplication implements ApplicationRunner{
@@ -49,8 +49,9 @@ public class MiscServerApplication implements ApplicationRunner{
             	double latitude = Double.parseDouble((String) place.get("latitude"));
             	new Place(name,longitude,latitude);
             }
-            
-            MOD mod = new MOD();
+//            MOD mod = new MOD();
+//            Utils.WriteObjectToFile(mod);
+            MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
             for (Location location : mod.locations) {
     			if(location.isPerson) {
     				Person p = (Person) location;

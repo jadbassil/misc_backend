@@ -44,6 +44,7 @@ public class Property implements Serializable{
 		this.buildProperty();
 	}
 	
+	//Get properties from DirectionsAPI
 	private void buildProperty() {
 		
 		RestTemplate restTemplate = new RestTemplate();
