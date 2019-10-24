@@ -1,4 +1,4 @@
-package models;
+package app.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class Location implements Serializable{
 	private static ArrayList<Person> persons = new ArrayList<Person>();
 	public boolean isPerson;
 	
-	public Location(double longitude, double latitude) {
+	public Location(double latitude, double longitude) {
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}

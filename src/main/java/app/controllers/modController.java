@@ -6,11 +6,11 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import models.Location;
-import models.MOD;
-import models.Person;
-import models.Place;
-import models.Property;
+import app.models.Location;
+import app.models.MOD;
+import app.models.Person;
+import app.models.Place;
+import app.models.Property;
 import utils.Utils;
 
 @RestController
@@ -24,14 +24,28 @@ public class modController {
 	}
 	
 	@RequestMapping("/routesToNearest")
-	public Map<String, Property> getRoutesToNearest(){
+	public Map<Integer, Object> getRoutesToNearest(){
 		MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
 		Place nearest = mod.nearestLocation();
-		Map<String, Property> result = new HashMap<String, Property>();
-		int nearestIndex = mod.locations.indexOf(nearest);
-		for(int i=0;i<Location.getPersons().size();i++) {
-			Person p = (Person) mod.getLocations().get(i);
-			result.put(p.getName(), mod.matrix.get(i).get(nearestIndex));
+		Map<Integer, Object> result = new HashMap<Integer, Object>();
+		int nearestIndex = Location.getPlaces().indexOf(mod.nearestLocation());
+//		for(int i=0;i<Location.getPersons().size();i++) {
+//			Person p = (Person) mod.getLocations().get(i);
+//			result.put(p.getName(), mod.matrix.get(i).get(nearestIndex));
+//		}
+		for (Person person : Location.getPersons()) {
+		
+			Map<String, Object> personData = new HashMap<String, Object>();
+			Place nearestToPerson = person.getNearestPlace();
+			System.out.println(nearestToPerson.getName());
+			Property property = mod.matrix.get(Location.getPlaces().indexOf(nearestToPerson)).get(nearestIndex);
+			property.setInstructions(person.getToNearestDirections().getInstructions() + property.getInstructions());
+			property.getRoutes().add(0, person.getToNearestDirections());
+			personData.put("name", (String) person.getName());
+			personData.put("nearestPlaceId", (Integer) person.getNearestPlace().getId());
+			personData.put("routes", property);
+			result.put(person.getId(), personData);
+			
 		}
 		return result;
 	}

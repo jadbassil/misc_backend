@@ -1,4 +1,4 @@
-package models;
+package app.models;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,24 +23,27 @@ public class Test {
             Object obj = jsonParser.parse(reader);
             JSONObject jsonObject = (JSONObject) obj;
             JSONArray persons = (JSONArray) jsonObject.get("persons");
-            for(Object o : persons) {
-            	JSONObject person = (JSONObject) o;
-            	String name = (String) person.get("name");
-            	double longitude = Double.parseDouble((String) person.get("longitude"));
-            	double latitude = Double.parseDouble((String) person.get("latitude"));
-            	new Person(name,longitude,latitude);
-            }
+           
             JSONArray places = (JSONArray) jsonObject.get("places");
+            int id = 0;
             for(Object o : places) {
             	JSONObject place = (JSONObject) o;
             	String name = (String) place.get("name");
             	double longitude = Double.parseDouble((String) place.get("longitude"));
             	double latitude = Double.parseDouble((String) place.get("latitude"));
-            	new Place(name,longitude,latitude);
+            	new Place(id++,name,longitude,latitude);
+            }
+            id = 0;
+            for(Object o : persons) {
+            	JSONObject person = (JSONObject) o;
+            	String name = (String) person.get("name");
+            	double longitude = Double.parseDouble((String) person.get("longitude"));
+            	double latitude = Double.parseDouble((String) person.get("latitude"));
+            	new Person(id++,name,longitude,latitude);
             }
             
 //            MOD mod = new MOD();
-//            Test.WriteObjectToFile(mod);
+//            Utils.WriteObjectToFile(mod);
             MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath); 
             for (int i = 0; i < mod.locations.size(); i++) {
 				ArrayList<Property> p = mod.matrix.get(i);
@@ -61,9 +64,15 @@ public class Test {
 				}
 				System.out.println();				
 			}
-            System.out.println(mod.matrix.get(0).get(6).getInstructions());
-            Place place = mod.nearestLocation();
-            System.out.println("nearest location: "+place.getName());
+            Person person = Location.getPersons().get(0);
+            Place nearestToPerson = person.getNearestPlace();
+            int nearestIndex = Location.getPlaces().indexOf(mod.nearestLocation());
+            System.out.println(Location.getPlaces().indexOf(nearestToPerson));
+			//Property property = mod.matrix.get(Location.getPlaces().indexOf(nearestToPerson)).get(nearestIndex);
+            System.out.println("nearestToPerson: " + Location.getPlaces().indexOf(nearestToPerson));
+            System.out.println("nearestIndex: " + nearestIndex);
+            System.out.println(mod.matrix.size());
+            System.out.println();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

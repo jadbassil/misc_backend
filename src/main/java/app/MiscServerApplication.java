@@ -11,10 +11,11 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import models.Location;
-import models.MOD;
-import models.Person;
-import models.Place;
+
+import app.models.Location;
+import app.models.MOD;
+import app.models.Person;
+import app.models.Place;
 import utils.Utils;
 
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
@@ -34,24 +35,26 @@ public class MiscServerApplication implements ApplicationRunner{
             Object obj = jsonParser.parse(reader);
             JSONObject jsonObject = (JSONObject) obj;
             JSONArray persons = (JSONArray) jsonObject.get("persons");
-            for(Object o : persons) {
-            	JSONObject person = (JSONObject) o;
-            	String name = (String) person.get("name");
-            	double longitude = Double.parseDouble((String) person.get("longitude"));
-            	double latitude = Double.parseDouble((String) person.get("latitude"));
-            	new Person(name,longitude,latitude);
-            }
             JSONArray places = (JSONArray) jsonObject.get("places");
+            int id = 0;
             for(Object o : places) {
             	JSONObject place = (JSONObject) o;
             	String name = (String) place.get("name");
             	double longitude = Double.parseDouble((String) place.get("longitude"));
             	double latitude = Double.parseDouble((String) place.get("latitude"));
-            	new Place(name,longitude,latitude);
+            	new Place(id++,name,longitude,latitude);
             }
-//            MOD mod = new MOD();
-//            Utils.WriteObjectToFile(mod);
-            MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
+            id = 0;
+            for(Object o : persons) {
+            	JSONObject person = (JSONObject) o;
+            	String name = (String) person.get("name");
+            	double longitude = Double.parseDouble((String) person.get("longitude"));
+            	double latitude = Double.parseDouble((String) person.get("latitude"));
+            	new Person(id++,name,longitude,latitude);
+            }
+            MOD mod = new MOD();
+            Utils.WriteObjectToFile(mod);
+          //  MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
             for (Location location : mod.locations) {
     			if(location.isPerson) {
     				Person p = (Person) location;

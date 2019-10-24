@@ -1,4 +1,4 @@
-package models;
+package app.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class MOD implements Serializable{
 	public ArrayList<Integer> changed = new ArrayList<Integer>(); 
 	
 	public  MOD() {
-		locations.addAll(Location.getPersons());
+		//locations.addAll(Location.getPersons());
 		locations.addAll(Location.getPlaces());
 		this.buildMatrix();
 		System.out.println("transitive closure started...");
@@ -54,10 +54,10 @@ public class MOD implements Serializable{
 	
 	public boolean transitiveClosure() {
 		boolean e = false;
-		for (int i = 0; i < locations.size(); i++) {
-			for (int j = 0; j <locations.size();  j++) {
+		for (int i = 0; i < Location.getPlaces().size(); i++) {
+			for (int j = 0; j <Location.getPlaces().size();  j++) {
 				if (matrix.get(i).get(j).getDistance() > 0) {
-					for (int k = 0; k < locations.size() ; k++) {
+					for (int k = 0; k < Location.getPlaces().size() ; k++) {
 						if(matrix.get(j).get(k).getDistance() >0)
 							if (matrix.get(i).get(j).getDistance() + matrix.get(j).get(k).getDistance() <matrix.get(i).get(k).getDistance()) {
 								matrix.get(i).get(k).setDistance(matrix.get(i).get(j).getDistance() + matrix.get(j).get(k).getDistance());
@@ -83,16 +83,21 @@ public class MOD implements Serializable{
 		int min = 9999999;
 		Location location = null;
 		int d;
-		for(int i=Location.getPersons().size();i<locations.size();i++) { // all places
+		for(int i=0;i<Location.getPlaces().size();i++) { // all places
 			d = 0;
-			Place p = (Place) locations.get(i);
+			Place p = Location.getPlaces().get(i);
 			System.out.print(p.getName() + ": ");
-			for(int j=0;j<Location.getPersons().size();j++) {
+//			for(int j=0;j<Location.getPersons().size();j++) {
+//				d += matrix.get(j).get(i).getDistance();
+//			}
+			for (Person person : Location.getPersons()) {
+				Place nearestToPerson = person.getNearestPlace();
+				int j = Location.getPlaces().indexOf(nearestToPerson);
 				d += matrix.get(j).get(i).getDistance();
 			}
 			if (d<min) {
 				min = d;
-				location = locations.get(i);
+				location = Location.getPlaces().get(i);
 			}
 			System.out.println(d);
 			
