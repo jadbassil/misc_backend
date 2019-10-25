@@ -33,10 +33,9 @@ public class modController {
 //			result.put(p.getName(), mod.matrix.get(i).get(nearestIndex));
 //		}
 		for (Person person : Location.getPersons()) {
-		
 			Map<String, Object> personData = new HashMap<String, Object>();
 			Place nearestToPerson = person.getNearestPlace();
-			System.out.println(nearestToPerson.getName());
+			//System.out.println(nearestToPerson.getName());
 			Property property = mod.matrix.get(Location.getPlaces().indexOf(nearestToPerson)).get(nearestIndex);
 			property.setInstructions(person.getToNearestDirections().getInstructions() + property.getInstructions());
 			property.setDistance(property.getDistance() + person.getToNearestDirections().getDistance());

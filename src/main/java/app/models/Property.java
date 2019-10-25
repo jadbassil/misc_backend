@@ -81,6 +81,7 @@ public class Property implements Serializable{
 				JSONObject stepDuration = (JSONObject) step.get("duration");
 				JSONObject stepDistance = (JSONObject) step.get("distance");
 				JSONObject polyline = (JSONObject) step.get("polyline");
+				JSONArray subSteps = (JSONArray) step.get("steps");
 				p.setFrom_latitude((double) start_location.get("lat"));
 				p.setFrom_longitude((double) start_location.get("lng"));
 				p.setTo_latitude((double) end_location.get("lat"));
@@ -91,6 +92,28 @@ public class Property implements Serializable{
 				p.setInstructions(step.get("html_instructions") + "\n");
 				p.setMode((String) step.get("travel_mode"));
 				this.routes.add(p);
+				if(subSteps!=null) {
+					for(int j=0;j<subSteps.size();j++) {
+						JSONObject subStep = (JSONObject) subSteps.get(j);
+						Property p1 = new Property();
+						start_location = (JSONObject) subStep.get("start_location");
+						end_location = (JSONObject) subStep.get("start_location");
+						stepDuration = (JSONObject) subStep.get("duration");
+						stepDistance = (JSONObject) subStep.get("distance");
+						polyline = (JSONObject) subStep.get("polyline");
+						p1.setFrom_latitude((double) start_location.get("lat"));
+						p1.setFrom_longitude((double) start_location.get("lng"));
+						p1.setTo_latitude((double) end_location.get("lat"));
+						p1.setTo_longitude((double) end_location.get("lng"));
+						p1.setDuration(Integer.parseInt(String.valueOf(stepDuration.get("value"))));
+						p1.setDistance(Integer.parseInt(String.valueOf(stepDistance.get("value"))));
+						p1.setPolyline((String) polyline.get("points"));
+						p1.setInstructions(subStep.get("html_instructions") + "\n");
+						p1.setMode((String) subStep.get("travel_mode"));
+						//p.setInstructions(p.getInstructions() + p1.getIn);
+						p.getRoutes().add(p1);
+					}
+				}
 			}
 			this.instructions = instructions;
 			this.duration = Integer.parseInt(String.valueOf(duration.get("value")));

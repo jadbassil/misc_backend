@@ -11,8 +11,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-
-import app.models.Location;
 import app.models.MOD;
 import app.models.Person;
 import app.models.Place;
@@ -52,19 +50,20 @@ public class MiscServerApplication implements ApplicationRunner{
             	double latitude = Double.parseDouble((String) person.get("latitude"));
             	new Person(id++,name,latitude,longitude);
             }
-//            MOD mod = new MOD();
-//            Utils.WriteObjectToFile(mod);
-            MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
-            for (Location location : mod.locations) {
-    			if(location.isPerson) {
-    				Person p = (Person) location;
-    				System.out.println(p.getName());
-    			}else {
-    				Place p = (Place) location;
-    				System.out.println(p.getName());
-    			}
-    				
-    		}
+            MOD mod = new MOD();
+            Utils.WriteObjectToFile(mod);
+            //MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
+//            for (Location location : mod.locations) {
+//    			if(location.isPerson) {
+//    				Person p = (Person) location;
+//    				System.out.println(p.getName());
+//    			}else {
+//    				Place p = (Place) location;
+//    				System.out.println(p.getName());
+//    			}
+//    				
+//    		}
+            System.out.println("Server running...");
  
         } catch (FileNotFoundException e) {
             e.printStackTrace();
