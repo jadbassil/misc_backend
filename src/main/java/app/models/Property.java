@@ -71,6 +71,7 @@ public class Property implements Serializable{
 			JSONObject distance = (JSONObject) legsData.get("distance");
 			String instructions = "";
 			JSONArray steps = (JSONArray) legsData.get("steps");
+			// can add more steps details
 			for (int i = 0; i < steps.size(); i++) {
 				JSONObject step = (JSONObject) steps.get(i);
 				instructions += step.get("html_instructions") + "\n";

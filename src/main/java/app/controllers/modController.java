@@ -26,7 +26,6 @@ public class modController {
 	@RequestMapping("/routesToNearest")
 	public Map<Integer, Object> getRoutesToNearest(){
 		MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
-		Place nearest = mod.nearestLocation();
 		Map<Integer, Object> result = new HashMap<Integer, Object>();
 		int nearestIndex = Location.getPlaces().indexOf(mod.nearestLocation());
 //		for(int i=0;i<Location.getPersons().size();i++) {
@@ -40,10 +39,12 @@ public class modController {
 			System.out.println(nearestToPerson.getName());
 			Property property = mod.matrix.get(Location.getPlaces().indexOf(nearestToPerson)).get(nearestIndex);
 			property.setInstructions(person.getToNearestDirections().getInstructions() + property.getInstructions());
+			property.setDistance(property.getDistance() + person.getToNearestDirections().getDistance());
 			property.getRoutes().addAll(0, person.getToNearestDirections().getRoutes());
 			personData.put("name", (String) person.getName());
-			personData.put("nearestPlaceId", (Integer) person.getNearestPlace().getId());
+			personData.put("nearestPlaceIdToPerson", (Integer) person.getNearestPlace().getId());
 			personData.put("routes", property);
+			
 			result.put(person.getId(), personData);
 			
 		}
