@@ -29,7 +29,7 @@ public class MOD implements Serializable{
 		for (Location i : locations) {
 			ArrayList<Property> pi = new ArrayList<Property>();
 			for(Location j : locations) {
-				Property p = new Property(i, j, "Transit");
+				Property p = new Property(i, j, "transit");
 				pi.add(p);
 			}
 			this.matrix.add(pi);

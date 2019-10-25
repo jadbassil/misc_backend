@@ -40,7 +40,7 @@ public class modController {
 			System.out.println(nearestToPerson.getName());
 			Property property = mod.matrix.get(Location.getPlaces().indexOf(nearestToPerson)).get(nearestIndex);
 			property.setInstructions(person.getToNearestDirections().getInstructions() + property.getInstructions());
-			property.getRoutes().add(0, person.getToNearestDirections());
+			property.getRoutes().addAll(0, person.getToNearestDirections().getRoutes());
 			personData.put("name", (String) person.getName());
 			personData.put("nearestPlaceId", (Integer) person.getNearestPlace().getId());
 			personData.put("routes", property);

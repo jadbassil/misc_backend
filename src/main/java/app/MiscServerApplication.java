@@ -42,7 +42,7 @@ public class MiscServerApplication implements ApplicationRunner{
             	String name = (String) place.get("name");
             	double longitude = Double.parseDouble((String) place.get("longitude"));
             	double latitude = Double.parseDouble((String) place.get("latitude"));
-            	new Place(id++,name,longitude,latitude);
+            	new Place(id++,name,latitude,longitude);
             }
             id = 0;
             for(Object o : persons) {
@@ -50,11 +50,11 @@ public class MiscServerApplication implements ApplicationRunner{
             	String name = (String) person.get("name");
             	double longitude = Double.parseDouble((String) person.get("longitude"));
             	double latitude = Double.parseDouble((String) person.get("latitude"));
-            	new Person(id++,name,longitude,latitude);
+            	new Person(id++,name,latitude,longitude);
             }
             MOD mod = new MOD();
             Utils.WriteObjectToFile(mod);
-          //  MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
+            //MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
             for (Location location : mod.locations) {
     			if(location.isPerson) {
     				Person p = (Person) location;

@@ -68,7 +68,7 @@ public class Person extends Location implements Serializable {
 	public void setToNearestDirections() {
 		Property p = new Property(
 				new Location(this.getLatitude(), this.getLongitude()),
-				new Location(this.nearestPlace.getLatitude(), this.nearestPlace.getLongitude()), "walking");
+				new Location(this.nearestPlace.getLatitude(), this.nearestPlace.getLongitude()), "transit");
 		this.toNearestDirections = p;
 	}
 	
