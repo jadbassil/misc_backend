@@ -77,7 +77,7 @@ public class Property implements Serializable{
 				instructions += step.get("html_instructions") + "\n";
 				Property p = new Property();
 				JSONObject start_location = (JSONObject) step.get("start_location");
-				JSONObject end_location = (JSONObject) step.get("start_location");
+				JSONObject end_location = (JSONObject) step.get("end_location");
 				JSONObject stepDuration = (JSONObject) step.get("duration");
 				JSONObject stepDistance = (JSONObject) step.get("distance");
 				JSONObject polyline = (JSONObject) step.get("polyline");
@@ -97,7 +97,7 @@ public class Property implements Serializable{
 						JSONObject subStep = (JSONObject) subSteps.get(j);
 						Property p1 = new Property();
 						start_location = (JSONObject) subStep.get("start_location");
-						end_location = (JSONObject) subStep.get("start_location");
+						end_location = (JSONObject) subStep.get("end_location");
 						stepDuration = (JSONObject) subStep.get("duration");
 						stepDistance = (JSONObject) subStep.get("distance");
 						polyline = (JSONObject) subStep.get("polyline");

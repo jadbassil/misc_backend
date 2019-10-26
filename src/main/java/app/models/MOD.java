@@ -86,7 +86,6 @@ public class MOD implements Serializable{
 		for(int i=0;i<Location.getPlaces().size();i++) { // all places
 			d = 0;
 			Place p = Location.getPlaces().get(i);
-			System.out.print(p.getName() + ": ");
 //			for(int j=0;j<Location.getPersons().size();j++) {
 //				d += matrix.get(j).get(i).getDistance();
 //			}
@@ -102,7 +101,9 @@ public class MOD implements Serializable{
 			System.out.println(d);
 			
 		}
-		return (Place) location;
+		Place nearest = (Place) location;
+		System.out.println("nearest location: " + nearest.getName() + " " + location.getLatitude() + " " + location.getLongitude());
+		return nearest;
 	}
 
 	public ArrayList<Location> getLocations() {

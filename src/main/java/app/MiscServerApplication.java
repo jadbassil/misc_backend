@@ -50,9 +50,9 @@ public class MiscServerApplication implements ApplicationRunner{
             	double latitude = Double.parseDouble((String) person.get("latitude"));
             	new Person(id++,name,latitude,longitude);
             }
-            MOD mod = new MOD();
-            Utils.WriteObjectToFile(mod);
-            //MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
+//            MOD mod = new MOD();
+//            Utils.WriteObjectToFile(mod);
+//            MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
 //            for (Location location : mod.locations) {
 //    			if(location.isPerson) {
 //    				Person p = (Person) location;

@@ -47,17 +47,14 @@ public class Person extends Location implements Serializable {
 		double min = 99999999;
 		Place nP = null;
 		for (Place place : Location.getPlaces()) {
-			System.out.println(place.getLatitude());
 			double distance = Math.sqrt(
 					Math.pow(place.getLatitude()-this.getLatitude(), 2)
 					+Math.pow(place.getLongitude()-this.getLongitude(), 2));
-			System.out.println("place: " + place.getName() + "; distance: "+distance);
 			if(distance<min) {
 				min = distance;
 				nP = place;
 			}
 		}
-		System.out.println(nP.getName() + "\n\n");
 		this.nearestPlace = nP;
 	}
 
