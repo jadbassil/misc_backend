@@ -31,7 +31,7 @@ public class Test {
             	String name = (String) place.get("name");
             	double longitude = Double.parseDouble((String) place.get("longitude"));
             	double latitude = Double.parseDouble((String) place.get("latitude"));
-            	new Place(id++,name,longitude,latitude);
+            	new Place(id++,name,latitude,longitude);
             }
             id = 0;
             for(Object o : persons) {
@@ -39,40 +39,10 @@ public class Test {
             	String name = (String) person.get("name");
             	double longitude = Double.parseDouble((String) person.get("longitude"));
             	double latitude = Double.parseDouble((String) person.get("latitude"));
-            	new Person(id++,name,longitude,latitude);
+            	new Person(id++,name,latitude,longitude);
             }
-            
-//            MOD mod = new MOD();
-//            Utils.WriteObjectToFile(mod);
-            MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath); 
-            for (int i = 0; i < mod.locations.size(); i++) {
-				ArrayList<Property> p = mod.matrix.get(i);
-				for (Property property : p) {
-					System.out.print(property.getDistance() + " ");
-				}
-				System.out.println();
-				
-			}
-            System.out.println(mod.matrix.get(0).get(6).getInstructions());
-            boolean e = mod.transitiveClosure();
-            while(e)
-            	e = mod.transitiveClosure();
-            for (int i = 0; i < mod.locations.size(); i++) {
-				ArrayList<Property> p = mod.matrix.get(i);
-				for (Property property : p) {
-					System.out.print(property.getDistance() + " ");
-				}
-				System.out.println();				
-			}
-            Person person = Location.getPersons().get(0);
-            Place nearestToPerson = person.getNearestPlace();
-            int nearestIndex = Location.getPlaces().indexOf(mod.nearestLocation());
-            System.out.println(Location.getPlaces().indexOf(nearestToPerson));
-			//Property property = mod.matrix.get(Location.getPlaces().indexOf(nearestToPerson)).get(nearestIndex);
-            System.out.println("nearestToPerson: " + Location.getPlaces().indexOf(nearestToPerson));
-            System.out.println("nearestIndex: " + nearestIndex);
-            System.out.println(mod.matrix.size());
-            System.out.println();
+            MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
+            System.out.println(mod.matrix.get(0).get(1));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

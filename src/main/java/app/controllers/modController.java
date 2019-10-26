@@ -41,10 +41,7 @@ public class modController {
 			property.setDistance(property.getDistance() + person.getToNearestDirections().getDistance());
 			property.setDuration(property.getDuration() + person.getToNearestDirections().getDuration());
 			property.getRoutes().addAll(0, person.getToNearestDirections().getRoutes());
-//			property.setFrom_latitude(person.getLatitude());
-//			property.setFrom_longitude(person.getLongitude());
-//			property.setTo_latitude(mod.nearestLocation().getLatitude());
-//			property.setTo_longitude(mod.nearestLocation().getLongitude());
+
 			personData.put("name", (String) person.getName());
 			personData.put("nearestPlaceIdToPerson", (Integer) person.getNearestPlace().getId());
 			personData.put("routes", property);

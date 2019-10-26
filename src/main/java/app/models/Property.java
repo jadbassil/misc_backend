@@ -29,8 +29,9 @@ public class Property implements Serializable{
 	private int distance;
 	private int duration;
 	private ArrayList<Property> routes = new ArrayList<Property>();
+	private JSONObject route	;
 	private String instructions;
-	private String polyline;
+	private ArrayList<String> polylines = new ArrayList<String>();
 	
 	public Property() {}
 	
@@ -40,7 +41,6 @@ public class Property implements Serializable{
 		this.to_longitude = to.getLongitude();
 		this.to_latitude = to.getLatitude();
 		this.mode = mode;
-		this.polyline = null;
 		this.buildProperty();
 	}
 	
@@ -63,61 +63,19 @@ public class Property implements Serializable{
 					HttpMethod.GET, entity, String.class,params);
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) parser.parse(response.getBody());
+			System.out.println(jsonObject);
 			JSONArray routes = (JSONArray) jsonObject.get("routes");
 			JSONObject routesData = (JSONObject) routes.get(0);
 			JSONArray legs = (JSONArray) routesData.get("legs");
 			JSONObject legsData = (JSONObject) legs.get(0);
-			JSONObject duration = (JSONObject) legsData.get("duration");
-			JSONObject distance = (JSONObject) legsData.get("distance");
-			String instructions = "";
+			this.setDistance(Integer.parseInt(String.valueOf(((JSONObject) legsData.get("distance")).get("value"))));
+			this.setDuration(Integer.parseInt(String.valueOf(((JSONObject) legsData.get("duration")).get("value"))));
 			JSONArray steps = (JSONArray) legsData.get("steps");
-			// can add more steps details
-			for (int i = 0; i < steps.size(); i++) {
-				JSONObject step = (JSONObject) steps.get(i);
-				instructions += step.get("html_instructions") + "\n";
-				Property p = new Property();
-				JSONObject start_location = (JSONObject) step.get("start_location");
-				JSONObject end_location = (JSONObject) step.get("end_location");
-				JSONObject stepDuration = (JSONObject) step.get("duration");
-				JSONObject stepDistance = (JSONObject) step.get("distance");
-				JSONObject polyline = (JSONObject) step.get("polyline");
-				JSONArray subSteps = (JSONArray) step.get("steps");
-				p.setFrom_latitude((double) start_location.get("lat"));
-				p.setFrom_longitude((double) start_location.get("lng"));
-				p.setTo_latitude((double) end_location.get("lat"));
-				p.setTo_longitude((double) end_location.get("lng"));
-				p.setDuration(Integer.parseInt(String.valueOf(stepDuration.get("value"))));
-				p.setDistance(Integer.parseInt(String.valueOf(stepDistance.get("value"))));
-				p.setPolyline((String) polyline.get("points"));
-				p.setInstructions(step.get("html_instructions") + "\n");
-				p.setMode((String) step.get("travel_mode"));
-				this.routes.add(p);
-				if(subSteps!=null) {
-					for(int j=0;j<subSteps.size();j++) {
-						JSONObject subStep = (JSONObject) subSteps.get(j);
-						Property p1 = new Property();
-						start_location = (JSONObject) subStep.get("start_location");
-						end_location = (JSONObject) subStep.get("end_location");
-						stepDuration = (JSONObject) subStep.get("duration");
-						stepDistance = (JSONObject) subStep.get("distance");
-						polyline = (JSONObject) subStep.get("polyline");
-						p1.setFrom_latitude((double) start_location.get("lat"));
-						p1.setFrom_longitude((double) start_location.get("lng"));
-						p1.setTo_latitude((double) end_location.get("lat"));
-						p1.setTo_longitude((double) end_location.get("lng"));
-						p1.setDuration(Integer.parseInt(String.valueOf(stepDuration.get("value"))));
-						p1.setDistance(Integer.parseInt(String.valueOf(stepDistance.get("value"))));
-						p1.setPolyline((String) polyline.get("points"));
-						p1.setInstructions(subStep.get("html_instructions") + "\n");
-						p1.setMode((String) subStep.get("travel_mode"));
-						//p.setInstructions(p.getInstructions() + p1.getIn);
-						p.getRoutes().add(p1);
-					}
-				}
+			for(int i=0; i<steps.size();i++) {
+				String polyline = "";
+				polyline = (String)((JSONObject)((JSONObject)steps.get(i)).get("polyline")).get("points");
+				this.polylines.add(polyline);
 			}
-			this.instructions = instructions;
-			this.duration = Integer.parseInt(String.valueOf(duration.get("value")));
-			this.distance = Integer.parseInt(String.valueOf(distance.get("value")));
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,15 +87,15 @@ public class Property implements Serializable{
 		return "Property [from_longitude=" + from_longitude + ", from_latitude=" + from_latitude + ", to_longitude="
 				+ to_longitude + ", to_latitude=" + to_latitude + ", mode=" + mode + ", distance=" + distance
 				+ ", duration=" + duration + ", routes=" + routes + ", instructions=" + instructions + ", polyline="
-				+ polyline + "]";
+				+ polylines + "]";
 	}
 
-	public String getPolyline() {
-		return polyline;
+	public ArrayList<String> getPolyline() {
+		return polylines;
 	}
 
-	public void setPolyline(String polyline) {
-		this.polyline = polyline;
+	public void setPolyline(ArrayList<String> polyline) {
+		this.polylines = polyline;
 	}
 
 	public double getFrom_longitude() {
