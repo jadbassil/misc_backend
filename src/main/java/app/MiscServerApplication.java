@@ -26,7 +26,7 @@ public class MiscServerApplication implements ApplicationRunner{
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
 		JSONParser jsonParser = new JSONParser();
-		try (FileReader reader = new FileReader("C:\\Users\\User\\Documents\\M2_IOT\\MISC\\misc_backend\\misc_server\\src\\main\\resources\\data.json"))
+		try (FileReader reader = new FileReader("C:\\Users\\User\\git\\misc_backend\\src\\main\\resources\\data.json"))
         {
             //Read JSON file
             Object obj = jsonParser.parse(reader);
@@ -49,8 +49,8 @@ public class MiscServerApplication implements ApplicationRunner{
             	double latitude = Double.parseDouble((String) person.get("latitude"));
             	new Person(id++,name,latitude,longitude);
             }
-            MOD mod = new MOD();
-            Utils.WriteObjectToFile(mod);
+//            MOD mod = new MOD();
+//            Utils.WriteObjectToFile(mod);
 //            MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
 //            for (Location location : mod.locations) {
 //    			if(location.isPerson) {

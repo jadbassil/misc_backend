@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,14 +38,26 @@ public class modController {
 			Place nearestToPerson = person.getNearestPlace();
 			//System.out.println(nearestToPerson.getName());
 			Property property = mod.matrix.get(Location.getPlaces().indexOf(nearestToPerson)).get(nearestIndex);
-			property.setInstructions(person.getToNearestDirections().getInstructions() + property.getInstructions());
-			property.setDistance(property.getDistance() + person.getToNearestDirections().getDistance());
-			property.setDuration(property.getDuration() + person.getToNearestDirections().getDuration());
-			property.getRoutes().addAll(0, person.getToNearestDirections().getRoutes());
+			Property p1 = new Property();
+			p1.setInstructions(person.getToNearestDirections().getInstructions() + property.getInstructions());
+			p1.setDistance(property.getDistance() + person.getToNearestDirections().getDistance());
+			p1.setDuration(property.getDuration() + person.getToNearestDirections().getDuration());
+			//property.getRoutes().addAll(0, person.getToNearestDirections().getRoutes());
 
-			personData.put("name", (String) person.getName());
-			personData.put("nearestPlaceIdToPerson", (Integer) person.getNearestPlace().getId());
-			personData.put("routes", property);
+			if(nearestToPerson.equals(Location.getPlaces().get(nearestIndex))) {
+				ArrayList<String> polylines = person.getToNearestDirections().getPolyline();
+				p1.getPolyline().addAll(person.getToNearestDirections().getPolyline());;
+				personData.put("routes", p1);
+			} else {
+				ArrayList<String> polylines = property.getPolyline();
+				p1.setPolyline(property.getPolyline());
+				p1.getPolyline().addAll(0, person.getToNearestDirections().getPolyline());
+				personData.put("routes", p1);
+			}
+
+				personData.put("name", (String) person.getName());
+				personData.put("nearestPlaceIdToPerson", (Integer) person.getNearestPlace().getId());
+			
 			
 			result.put(person.getId(), personData);
 			

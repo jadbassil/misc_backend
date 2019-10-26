@@ -19,10 +19,10 @@ public class MOD implements Serializable{
 		locations.addAll(Location.getPlaces());
 		this.buildMatrix();
 		System.out.println("transitive closure started...");
-		boolean e = this.transitiveClosure();
-		while(e) {
-			e = this.transitiveClosure();
-		}
+//		boolean e = this.transitiveClosure();
+//		while(e) {
+//			e = this.transitiveClosure();
+//		}
 	}
 	
 	private void buildMatrix() {

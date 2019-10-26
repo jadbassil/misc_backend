@@ -55,6 +55,8 @@ public class Person extends Location implements Serializable {
 				nP = place;
 			}
 		}
+		
+		System.out.println("Person: " + this.getName() + "("+this.getLatitude() + "," + this.getLongitude()+ ") nearest: " + nP.getName());
 		this.nearestPlace = nP;
 	}
 
@@ -67,6 +69,7 @@ public class Person extends Location implements Serializable {
 				new Location(this.getLatitude(), this.getLongitude()),
 				new Location(this.nearestPlace.getLatitude(), this.nearestPlace.getLongitude()), "transit");
 		this.toNearestDirections = p;
+		System.out.println("Person: " + this.getName() + "nearestProperty: " + p.getPolyline());
 	}
 	
 }

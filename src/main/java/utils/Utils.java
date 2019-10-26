@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 
 public class Utils {
 	
-	public static String filepath = "C:\\Users\\User\\Documents\\M2_IOT\\MISC\\misc_backend\\misc_server\\src\\main\\resources\\obj";
+	public static String filepath = "C:\\Users\\User\\git\\misc_backend\\src\\main\\resources\\obj";
 	
     public static void WriteObjectToFile(Object serObj) {
     	 
