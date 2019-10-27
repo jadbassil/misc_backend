@@ -19,10 +19,10 @@ public class MOD implements Serializable{
 		locations.addAll(Location.getPlaces());
 		this.buildMatrix();
 		System.out.println("transitive closure started...");
-		boolean e = this.transitiveClosure();
-		while(e) {
-			e = this.transitiveClosure();
-		}
+//		boolean e = this.transitiveClosure();
+//		while(e) {
+//			e = this.transitiveClosure();
+//		}
 	}
 	
 	private void buildMatrix() {
@@ -62,7 +62,8 @@ public class MOD implements Serializable{
 							if (matrix.get(i).get(j).getDistance() + matrix.get(j).get(k).getDistance() <matrix.get(i).get(k).getDistance()) {
 								matrix.get(i).get(k).setDistance(matrix.get(i).get(j).getDistance() + matrix.get(j).get(k).getDistance());
 								matrix.get(i).get(k).setDuration(matrix.get(i).get(j).getDuration() + matrix.get(j).get(k).getDuration());
-								matrix.get(i).get(k).setInstructions(matrix.get(i).get(j).getInstructions()+matrix.get(j).get(k).getInstructions());
+								matrix.get(i).get(k).setInstructions(matrix.get(i).get(j).getInstructions());
+								matrix.get(i).get(k).getInstructions().addAll(matrix.get(j).get(k).getInstructions());
 								ArrayList<Property> newRoutes = matrix.get(i).get(j).getRoutes();
 								newRoutes.addAll(matrix.get(j).get(k).getRoutes());
 								matrix.get(i).get(k).setRoutes(newRoutes);
@@ -85,7 +86,6 @@ public class MOD implements Serializable{
 		int d;
 		for(int i=0;i<Location.getPlaces().size();i++) { // all places
 			d = 0;
-			Place p = Location.getPlaces().get(i);
 //			for(int j=0;j<Location.getPersons().size();j++) {
 //				d += matrix.get(j).get(i).getDistance();
 //			}
@@ -98,11 +98,11 @@ public class MOD implements Serializable{
 				min = d;
 				location = Location.getPlaces().get(i);
 			}
-			System.out.println(d);
+			//System.out.println(d);
 			
 		}
 		Place nearest = (Place) location;
-		System.out.println("nearest location: " + nearest.getName() + " " + location.getLatitude() + " " + location.getLongitude());
+		//System.out.println("nearest location: " + nearest.getName() + " " + location.getLatitude() + " " + location.getLongitude());
 		return nearest;
 	}
 

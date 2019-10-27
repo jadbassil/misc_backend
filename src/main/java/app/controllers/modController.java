@@ -2,7 +2,6 @@ package app.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,16 +34,30 @@ public class modController {
 		for (Person person : Location.getPersons()) {
 			Map<String, Object> personData = new HashMap<String, Object>();
 			Place nearestToPerson = person.getNearestPlace();
-			//System.out.println(nearestToPerson.getName());
 			Property property = mod.matrix.get(Location.getPlaces().indexOf(nearestToPerson)).get(nearestIndex);
-			property.setInstructions(person.getToNearestDirections().getInstructions() + property.getInstructions());
-			property.setDistance(property.getDistance() + person.getToNearestDirections().getDistance());
-			property.setDuration(property.getDuration() + person.getToNearestDirections().getDuration());
-			property.getRoutes().addAll(0, person.getToNearestDirections().getRoutes());
+			Property p1 = new Property();
+			p1.setInstructions(person.getToNearestDirections().getInstructions());
+			p1.getInstructions().addAll(property.getInstructions());
+			p1.setDistance(property.getDistance() + person.getToNearestDirections().getDistance());
+			p1.setDuration(property.getDuration() + person.getToNearestDirections().getDuration());
+			p1.setFrom_latitude(property.getFrom_latitude());
+			p1.setFrom_longitude(property.getFrom_longitude());
+			p1.setTo_latitude(property.getTo_latitude());
+			p1.setTo_longitude(property.getTo_longitude());
+			p1.setMode(property.getMode());
 
-			personData.put("name", (String) person.getName());
-			personData.put("nearestPlaceIdToPerson", (Integer) person.getNearestPlace().getId());
-			personData.put("routes", property);
+			if(nearestToPerson.equals(Location.getPlaces().get(nearestIndex))) {
+				p1.getPolyline().addAll(person.getToNearestDirections().getPolyline());;
+				personData.put("routes", p1);
+			} else {
+				p1.setPolyline(property.getPolyline());
+				p1.getPolyline().addAll(0, person.getToNearestDirections().getPolyline());
+				personData.put("routes", p1);
+			}
+
+				personData.put("name", (String) person.getName());
+				personData.put("nearestPlaceIdToPerson", (Integer) person.getNearestPlace().getId());
+			
 			
 			result.put(person.getId(), personData);
 			

@@ -17,7 +17,7 @@ public class Test {
 
 	public static void main(String[] args) throws ParseException {
 		JSONParser jsonParser = new JSONParser();
-		try (FileReader reader = new FileReader("C:\\Users\\User\\Documents\\M2_IOT\\MISC\\misc_backend\\misc_server\\src\\main\\resources\\data.json"))
+		try (FileReader reader = new FileReader("C:\\Users\\User\\git\\misc_backend\\src\\main\\resources\\data.json"))
         {
             //Read JSON file
             Object obj = jsonParser.parse(reader);

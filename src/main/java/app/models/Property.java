@@ -29,8 +29,7 @@ public class Property implements Serializable{
 	private int distance;
 	private int duration;
 	private ArrayList<Property> routes = new ArrayList<Property>();
-	private JSONObject route	;
-	private String instructions;
+	private ArrayList<String> instructions = new ArrayList<String>();
 	private ArrayList<String> polylines = new ArrayList<String>();
 	
 	public Property() {}
@@ -63,18 +62,25 @@ public class Property implements Serializable{
 					HttpMethod.GET, entity, String.class,params);
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) parser.parse(response.getBody());
-			System.out.println(jsonObject);
 			JSONArray routes = (JSONArray) jsonObject.get("routes");
 			JSONObject routesData = (JSONObject) routes.get(0);
 			JSONArray legs = (JSONArray) routesData.get("legs");
 			JSONObject legsData = (JSONObject) legs.get(0);
 			this.setDistance(Integer.parseInt(String.valueOf(((JSONObject) legsData.get("distance")).get("value"))));
 			this.setDuration(Integer.parseInt(String.valueOf(((JSONObject) legsData.get("duration")).get("value"))));
+
 			JSONArray steps = (JSONArray) legsData.get("steps");
 			for(int i=0; i<steps.size();i++) {
 				String polyline = "";
 				polyline = (String)((JSONObject)((JSONObject)steps.get(i)).get("polyline")).get("points");
 				this.polylines.add(polyline);
+				//this.instructions += (String)((JSONObject) steps.get(i)).get("html_instructions") + '\n';
+				JSONArray subSteps = (JSONArray) ((JSONObject) steps.get(i)).get("steps");
+				for(int j=0;j<subSteps.size();j++) {
+					this.instructions.add((String)((JSONObject) subSteps.get(j)).get("html_instructions") + " for " +
+							(String) ((JSONObject)((JSONObject) subSteps.get(j)).get("distance")).get("text"));
+				}
+				
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -162,13 +168,14 @@ public class Property implements Serializable{
 		return routes;
 	}
 
-	public String getInstructions() {
+	public ArrayList<String> getInstructions() {
 		return instructions;
 	}
 
-	public void setInstructions(String instructions) {
+	public void setInstructions(ArrayList<String> instructions) {
 		this.instructions = instructions;
 	}
+
 	
 	
 	
