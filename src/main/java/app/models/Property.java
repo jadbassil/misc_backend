@@ -76,10 +76,15 @@ public class Property implements Serializable{
 				this.polylines.add(polyline);
 				//this.instructions += (String)((JSONObject) steps.get(i)).get("html_instructions") + '\n';
 				JSONArray subSteps = (JSONArray) ((JSONObject) steps.get(i)).get("steps");
-				for(int j=0;j<subSteps.size();j++) {
-					this.instructions.add((String)((JSONObject) subSteps.get(j)).get("html_instructions") + " for " +
-							(String) ((JSONObject)((JSONObject) subSteps.get(j)).get("distance")).get("text"));
+				if(subSteps != null) {
+					for(int j=0;j<subSteps.size();j++) {
+						this.instructions.add((String)((JSONObject) subSteps.get(j)).get("html_instructions") + " for " +
+								(String) ((JSONObject)((JSONObject) subSteps.get(j)).get("distance")).get("text"));
+					}
+				}else {
+					this.instructions.add((String)((JSONObject)steps.get(i)).get("html_instructions"));
 				}
+				
 				
 			}
 		}catch (Exception e) {
