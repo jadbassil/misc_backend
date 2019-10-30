@@ -15,7 +15,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
-public class Property implements Serializable{
+public class Property implements Serializable, Cloneable{
 	
 	/**
 	 * 
@@ -42,6 +42,10 @@ public class Property implements Serializable{
 		this.mode = mode;
 		this.buildProperty();
 	}
+	
+	 public Object clone() throws CloneNotSupportedException { 
+		 return super.clone(); 
+	} 
 	
 	//Get properties from DirectionsAPI
 	private void buildProperty() {

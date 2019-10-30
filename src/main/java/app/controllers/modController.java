@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +37,9 @@ public class modController {
 			Place nearestToPerson = person.getNearestPlace();
 			Property property = mod.matrix.get(Location.getPlaces().indexOf(nearestToPerson)).get(nearestIndex);
 			Property p1 = new Property();
-			p1.setInstructions(person.getToNearestDirections().getInstructions());
+			personData.put("name", (String) person.getName());
+			personData.put("nearestPlaceIdToPerson", (Integer) person.getNearestPlace().getId());
+			p1.setInstructions(((ArrayList<String>) person.getToNearestDirections().getInstructions().clone()));
 			p1.getInstructions().addAll(property.getInstructions());
 			p1.setDistance(property.getDistance() + person.getToNearestDirections().getDistance());
 			p1.setDuration(property.getDuration() + person.getToNearestDirections().getDuration());
@@ -54,13 +57,9 @@ public class modController {
 				p1.getPolyline().addAll(0, person.getToNearestDirections().getPolyline());
 				personData.put("routes", p1);
 			}
-
-				personData.put("name", (String) person.getName());
-				personData.put("nearestPlaceIdToPerson", (Integer) person.getNearestPlace().getId());
-			
-			
+				
 			result.put(person.getId(), personData);
-			
+
 		}
 		return result;
 	}
