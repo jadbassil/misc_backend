@@ -12,17 +12,17 @@ public class MOD implements Serializable{
 	public ArrayList<Location> locations = new ArrayList<Location>();
 	public ArrayList<ArrayList<Property>> matrix = new ArrayList<ArrayList<Property>>();
 	
-	public ArrayList<Integer> changed = new ArrayList<Integer>(); 
+	//public ArrayList<Integer> changed = new ArrayList<Integer>(); 
 	
 	public  MOD() {
 		//locations.addAll(Location.getPersons());
 		locations.addAll(Location.getPlaces());
 		this.buildMatrix();
 		System.out.println("transitive closure started...");
-//		boolean e = this.transitiveClosure();
-//		while(e) {
-//			e = this.transitiveClosure();
-//		}
+		boolean e = this.transitiveClosure();
+		while(e) {
+			e = this.transitiveClosure();
+		}
 	}
 	
 	private void buildMatrix() {
@@ -60,6 +60,7 @@ public class MOD implements Serializable{
 					for (int k = 0; k < Location.getPlaces().size() ; k++) {
 						if(matrix.get(j).get(k).getDistance() >0)
 							if (matrix.get(i).get(j).getDistance() + matrix.get(j).get(k).getDistance() <matrix.get(i).get(k).getDistance()) {
+								// append items of j->k to i->k
 								matrix.get(i).get(k).setDistance(matrix.get(i).get(j).getDistance() + matrix.get(j).get(k).getDistance());
 								matrix.get(i).get(k).setDuration(matrix.get(i).get(j).getDuration() + matrix.get(j).get(k).getDuration());
 								matrix.get(i).get(k).setInstructions(matrix.get(i).get(j).getInstructions());

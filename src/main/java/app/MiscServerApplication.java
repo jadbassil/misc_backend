@@ -1,5 +1,6 @@
 package app;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,7 +27,8 @@ public class MiscServerApplication implements ApplicationRunner{
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
 		JSONParser jsonParser = new JSONParser();
-		try (FileReader reader = new FileReader("C:\\Users\\User\\Documents\\M2_IOT\\MISC\\misc_backend\\misc_server\\src\\main\\resources\\data.json"))
+		File file = new File("src\\main\\resources\\data.json");
+		try (FileReader reader = new FileReader(file))
         {
             //Read JSON file
             Object obj = jsonParser.parse(reader);
@@ -49,6 +51,11 @@ public class MiscServerApplication implements ApplicationRunner{
             	double latitude = Double.parseDouble((String) person.get("latitude"));
             	new Person(id++,name,latitude,longitude);
             }
+            System.out.println(Utils.filepath);
+			if(Utils.ReadObjectFromFile(Utils.filepath) == null) {
+				MOD mod = new MOD();
+				Utils.WriteObjectToFile(mod);
+			}
 //            MOD mod = new MOD();
 //            Utils.WriteObjectToFile(mod);
 //            MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);

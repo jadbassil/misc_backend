@@ -13,7 +13,6 @@ public class Location implements Serializable{
 	private double latitude;
 	private static ArrayList<Place> places = new ArrayList<Place>();
 	private static ArrayList<Person> persons = new ArrayList<Person>();
-	public boolean isPerson;
 	
 	public Location(double latitude, double longitude) {
 		this.longitude = longitude;

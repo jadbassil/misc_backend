@@ -23,6 +23,7 @@ public class modController {
 		return mod.nearestLocation();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/routesToNearest")
 	public Map<Integer, Object> getRoutesToNearest(){
 		MOD mod = (MOD) Utils.ReadObjectFromFile(Utils.filepath);
@@ -59,7 +60,6 @@ public class modController {
 			}
 				
 			result.put(person.getId(), personData);
-
 		}
 		return result;
 	}

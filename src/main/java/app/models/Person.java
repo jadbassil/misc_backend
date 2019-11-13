@@ -15,7 +15,7 @@ public class Person extends Location implements Serializable {
 	
 	public Person(int id, String name, double latitude, double longitude) {
 		super(latitude, longitude);
-		super.isPerson = true;
+		//super.isPerson = true;
 		this.name = name;
 		this.setId(id);
 		this.setNearestPlace();

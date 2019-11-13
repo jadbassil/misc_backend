@@ -1,18 +1,27 @@
 package utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Utils {
 	
-	public static String filepath = "C:\\Users\\User\\Documents\\M2_IOT\\MISC\\misc_backend\\misc_server\\src\\main\\resources\\obj";
+	static Path p = Paths.get("");
+	//public static String filepath = "C:\\Users\\User\\Documents\\M2_IOT\\MISC\\misc_backend\\misc_server\\src\\main\\resources\\obj";
+	
+	static File file = new File("src\\main\\resources\\obj");
+	public static String filepath = file.getAbsolutePath();
+
+	 	
 	
     public static void WriteObjectToFile(Object serObj) {
-    	 
+    	System.out.println("filepath: " + filepath);
         try {
- 
+        	
             FileOutputStream fileOut = new FileOutputStream(filepath);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(serObj);

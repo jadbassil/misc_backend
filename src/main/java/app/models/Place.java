@@ -14,7 +14,7 @@ public class Place extends Location implements Serializable{
 	public Place(int id, String name, double latitude, double longitude) {
 		super(latitude, longitude);
 		this.setId(id);
-		super.isPerson = false;
+		//super.isPerson = false;
 		this.name = name;
 		Location.addPlace(this);
 	}
