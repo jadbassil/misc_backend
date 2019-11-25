@@ -12,8 +12,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import app.models.MOD;
 import app.models.Person;
 import app.models.Place;
@@ -24,11 +22,6 @@ public class MiscServerApplication implements ApplicationRunner{
 
 	public static void main(String[] args) {
 		SpringApplication.run(MiscServerApplication.class, args);
-	}
-	
-	@RequestMapping("/")
-	public String index() {
-		return "Running...";
 	}
 	
 	@Override
